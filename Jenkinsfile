@@ -1,12 +1,18 @@
 pipeline {
     agent any
     parameters {
-        string(defaultValue: '', description: 'Enter BUILD NUMBER to deploy', name: 'input', trim: false)
+        string(defaultValue: '', description: 'Enter Environment Name:', name: 'Environment_name', trim: false)
+        string(defaultValue: 'latest', description: 'Enter BUILD NUMBER to deploy [Default Value: latest]:', name: 'Build_Number', trim: false)
     }
  stages {
+     stage('Pull file from S3 ') {
+            steps {
+                sh 'aws s3 cp s3://bucket/folder/${Build_Number}.zip .'
+            }
+        }      
      stage("Deploy"){
            steps{
-              sh "cp -r /root/.jenkins/workspace/Kupos_AT/img/${input}.png /home/ec2-user/apache-tomcat-8.5.66/webapps"
+              echo "yes"
               } 
           }
      }
