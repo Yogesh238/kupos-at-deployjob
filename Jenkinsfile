@@ -13,7 +13,7 @@ pipeline {
      stage("Deploy"){
            steps{
                 script {
-                    if ( ${environment} = 'master') {
+                    if ( ${environment}=='master') {
                         echo 'I only execute on the master branch'
                     } else {
                         echo 'I execute elsewhere'
