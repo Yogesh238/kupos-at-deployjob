@@ -1,12 +1,12 @@
 pipeline {
     agent any
     parameters {
-        text(name: 'input', defaultValue: '' , description: 'Enter BUILD NUMBER which you want to deploy (Number must be an integer)')
+        string(defaultValue: '', description: 'Enter BUILD NUMBER to deploy', name: 'input', trim: false)
     }
  stages {
      stage("Deploy"){
            steps{
-              sh "cp -r /root/.jenkins/workspace/Kupos_AT/img/${BUILD_NUMBER}.png /home/ec2-user/apache-tomcat-8.5.66/webapps"
+              sh "cp -r /root/.jenkins/workspace/Kupos_AT/img/${input}.png /home/ec2-user/apache-tomcat-8.5.66/webapps"
               } 
           }
      }
