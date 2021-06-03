@@ -15,8 +15,12 @@ pipeline {
                 script {
                     if ( params.environment=='prod') {
                         sh 'cp ${input}.zip /home/ec2-user/prod_environment'
+                        sh 'unzip ${input}.zip'
+                        sh 'rm ${input}.zip'
                     } else if ( params.environment=='dev') {
                         sh 'cp ${input}.zip /home/ec2-user/dev_environment'
+                        sh 'unzip ${input}.zip'
+                        sh 'rm ${input}.zip'
                     }
                  }              
               } 
