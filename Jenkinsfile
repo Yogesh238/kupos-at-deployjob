@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        string(defaultValue: '', description: 'Enter Environment Name:', name: 'environment', trim: false)
+        string(defaultValue: '', description: 'Enter Environment Name (Available Environments: dev & prod) :', name: 'environment', trim: false)
         string(defaultValue: 'latest', description: 'Enter BUILD NUMBER to deploy [Default Value: latest]:', name: 'input', trim: false)
     }
  stages {
@@ -13,10 +13,10 @@ pipeline {
      stage("Deploy"){
            steps{
                 script {
-                    if ( params.environment=='master') {
-                        echo 'I only execute on the master branch'
-                    } else if ( params.environment=='mast') {
-                        echo 'I execute elsewhere'
+                    if ( params.environment=='prod') {
+                        sh 'cp ${input}.zip /home/ec2-user/prod_environment'
+                    } else if ( params.environment=='dev') {
+                        sh 'cp ${input}.zip /home/ec2-user/dev_environment'
                     }
                  }              
               } 
