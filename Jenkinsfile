@@ -15,7 +15,7 @@ pipeline {
                 script {
                     if ( params.environment=='master') {
                         echo 'I only execute on the master branch'
-                    } else {
+                    } else if ( params.environment=='mast') {
                         echo 'I execute elsewhere'
                     }
                  }              
