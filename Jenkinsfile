@@ -7,7 +7,7 @@ pipeline {
  stages {
      stage('Pull file from S3 ') {
             steps {
-                sh 'aws s3 cp s3://bucket/folder/${input}.zip .'
+                sh 'aws s3 cp s3://kupos-at-project/${input}.zip .'
             }
         }      
      stage("Deploy"){
