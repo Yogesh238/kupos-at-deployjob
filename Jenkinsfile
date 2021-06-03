@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        string(defaultValue: '', description: 'Enter Environment Name:', name: 'git', trim: false)
+        string(defaultValue: '', description: 'Enter Environment Name:', name: 'environment', trim: false)
         string(defaultValue: 'latest', description: 'Enter BUILD NUMBER to deploy [Default Value: latest]:', name: 'input', trim: false)
     }
  stages {
@@ -13,7 +13,7 @@ pipeline {
      stage("Deploy"){
            steps{
                 script {
-                    if ( ${git} == 'master') {
+                    if ( ${environment} = 'master') {
                         echo 'I only execute on the master branch'
                     } else {
                         echo 'I execute elsewhere'
