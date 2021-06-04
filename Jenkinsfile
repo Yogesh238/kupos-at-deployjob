@@ -12,19 +12,19 @@ pipeline {
         }      
      stage("Deploy"){
              steps{
-                 sshagent(credentials : ['app_server']) {
+                sshagent(credentials : ['app_server']) {
                      script {
                      if ( params.environment=='prod') {
-                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl stop goweb.service'
+                        sh 'ssh -o StrictHostKeyChecking=no root@3.87.185.160 systemctl stop goweb.service'
                         sh 'scp ${input}.zip ubuntu@3.87.185.160:/root/go/go-web'
-                        sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl start goweb.service'
+                        sh 'ssh -o StrictHostKeyChecking=no root@3.87.185.160 systemctl start goweb.service'
                     }
-                     else if ( params.environment=='stage') {
+                     else if ( params.environment=='stage') {                   
                          sh 'whoami'
-                         sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl stop gostage.service'
+                         sh 'ssh -v -o StrictHostKeyChecking=no root@3.87.185.160 systemctl stop gostage.service'
                          sh 'scp ${input}.zip ubuntu@3.87.185.160:/root/go/go-stage'
-                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl start gostage.service'
-                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 unzip -y /root/go/go-stage/${input}.zip'
+                         sh 'ssh -o StrictHostKeyChecking=no root@3.87.185.160 systemctl start gostage.service'
+                         sh 'ssh -o StrictHostKeyChecking=no root@3.87.185.160 unzip -y /root/go/go-stage/${input}.zip'
                                 }
                             }
                         }
