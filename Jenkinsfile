@@ -34,11 +34,13 @@ pipeline {
                 script{
                     status="\$(curl -Is http://3.87.185.160/ | head -1)"
                     validate=( $status )
-                    if [ ${validate[-2]} == "200" ]; then
+                    if ( ${validate[-2]} == "200" ) {
                       echo "Everything is Ok"
-                    else
+                    }
+                    else 
+                    {
                       echo "NOT RESPONDING"
-                    fi
+                    }
                 }
             }
         }    
