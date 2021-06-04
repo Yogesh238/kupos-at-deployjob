@@ -16,7 +16,6 @@ pipeline {
                     if ( params.environment=='prod') {
                         sh 'cp ${input}.zip /home/ec2-user/prod_environment'
                         sh 'unzip -o /home/ec2-user/prod_environment/${input}.zip'
-                        sh 'rm /home/ec2-user/prod_environment/${input}.zip'
                     } else if ( params.environment=='dev') {
                         sh 'cp ${input}.zip /home/ec2-user/dev_environment'
                         sh 'unzip -o /home/ec2-user/dev_environment/${input}.zip'
