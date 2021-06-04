@@ -20,14 +20,28 @@ pipeline {
                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl start goweb.service'
                     }
                      else if ( params.environment=='stage') {
-                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl stop gostage.service'
+                         sh 'ssh -v -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl stop gostage.service'
                          sh 'scp ${input}.zip ubuntu@3.87.185.160:/root/go/go-stage'
                          sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 systemctl start gostage.service'
-                     }
-                     }
-                       }
+                         sh 'ssh -o StrictHostKeyChecking=no ubuntu@3.87.185.160 unzip -y /root/go/go-stage/${input}.zip'
+                                }
+                            }
+                        }
                     }
                 }
+      stage('Infra Sanity Check') {
+            steps {
+                script{
+                    status="$(curl -Is http://3.87.185.160/ | head -1)"
+                    validate=( $status )
+                    if [ ${validate[-2]} == "200" ]; then
+                      echo "Everything is Ok"
+                    else
+                      echo "NOT RESPONDING"
+                    fi
+                }
+            }
+        }    
 //           steps{
 //                script {
 //                     if ( params.environment=='prod') {
