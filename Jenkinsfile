@@ -13,7 +13,8 @@ pipeline {
      stage("Deploy"){
              steps{
                  sshagent(credentials : ['app_server']) {
-                    if ( params.environment=='prod') {
+                     script {
+                     if ( params.environment=='prod') {
                         sh 'ssh -o StrictHostKeyChecking=no user@hostname.com systemctl stop goweb.service'
                         sh 'scp ${input}.zip ubuntu@3.87.185.160:/root/go/go-web'
                         sh 'ssh -o StrictHostKeyChecking=no user@hostname.com systemctl start goweb.service'
@@ -23,7 +24,7 @@ pipeline {
                          sh 'scp ${input}.zip ubuntu@3.87.185.160:/root/go/go-stage'
                          sh 'ssh -o StrictHostKeyChecking=no user@hostname.com systemctl start gostage.service'
                      }
-                     
+                     }
                        }
                     }
                 }
