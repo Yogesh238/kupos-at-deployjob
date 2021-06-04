@@ -32,7 +32,7 @@ pipeline {
       stage('Infra Sanity Check') {
             steps {
                 script{
-                    status="$(curl -Is http://3.87.185.160/ | head -1)"
+                    status="\$(curl -Is http://3.87.185.160/ | head -1)"
                     validate=( $status )
                     if [ ${validate[-2]} == "200" ]; then
                       echo "Everything is Ok"
